@@ -1,0 +1,47 @@
+﻿<Window x:Class="Server.Contents.SwapProduct" x:Name="thisPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:Server.Contents"
+        xmlns:UI="clr-namespace:Server.UIElemetn"
+        MaxHeight="500"  MaxWidth="450" 
+        MinHeight="500"  MinWidth="450"
+        Height="500"     Width="450" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen" Top="0">
+    <Grid>
+        <materialDesign:ColorZone Height="50" Background="{Binding ElementName=ColorBtn, Path=Background}" Margin="0" Padding="0"/>
+        <StackPanel  Margin="10 10 0 0">
+            <TextBlock Text="Перевозка товара" Style="{StaticResource MaterialDesignHeadlineTextBlock}" Margin="0 0 0 20" Foreground="#fff"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Товар:" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="0 0 5 0 "/>
+                <TextBlock Text="{Binding ElementName=thisPage,Path=Product.Product.Name}" Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"  Margin="0 10">
+                <TextBlock Text="Вид товара:" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="0 0 5 0 "/>
+                <TextBlock Text="{Binding ElementName=thisPage,Path=Product.Product.Type.FullName}" Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"  Margin="0 10">
+                <TextBlock Text="Доступное количество: " Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="0 0 5 0 "/>
+                <TextBlock Text="{Binding ElementName=thisPage,Path=Product.Amount}" Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+            </StackPanel>
+            <Grid Margin="0 0 0 5">
+                <ComboBox materialDesign:HintAssist.Hint="В склад" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="5 0 10 0"  x:Name="ToWarehouse" ItemsSource="{Binding Warehouses}" MaxDropDownHeight="150" SelectedItem="{Binding ElementName=thisPage,Path=To}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+            <Grid Margin="0 0 0 5">
+                <TextBox materialDesign:HintAssist.Hint="Количество" Text="{Binding ElementName=thisPage,Path=Amount}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5 0 10 0"/>
+            </Grid>
+        </StackPanel>
+        <StackPanel Grid.Row="10" VerticalAlignment="Bottom" Margin="0 10 10 20" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button x:Name="YesBtn" Content="Добавить" Margin="0 0 10 0" Click="YesBtn_Click"/>
+            <Button x:Name="NoBtn" Content="Отменить" Click="NoBtn_Click" Focusable="True" Style="{StaticResource MaterialDesignRaisedLightButton}"/>
+        </StackPanel>
+        <Button Visibility="Collapsed" x:Name="ColorBtn"/>
+    </Grid>
+</Window>

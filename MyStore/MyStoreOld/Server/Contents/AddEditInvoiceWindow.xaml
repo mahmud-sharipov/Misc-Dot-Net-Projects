@@ -1,0 +1,55 @@
+﻿<Window x:Class="Server.Contents.AddEditInvoiceWindow" x:Name="thisPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:Server.Contents"
+        xmlns:UI="clr-namespace:Server.UIElemetn"
+        MaxHeight="450"  MaxWidth="450" 
+        MinHeight="450"  MinWidth="450"
+        Height="450"     Width="450" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen" Top="0">
+    <Grid>
+        <materialDesign:ColorZone Height="50" Background="{Binding ElementName=ColorBtn, Path=Background}" Margin="0" Padding="0"/>
+        <StackPanel  Margin="10 10 0 0">
+            <TextBlock Text="Данные продажи" Style="{StaticResource MaterialDesignHeadlineTextBlock}" Margin="0 0 0 20" Foreground="#fff"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Товар:" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="0 0 5 0 "/>
+                <TextBlock Text="{Binding Product.Name}" Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"  Margin="0 10">
+                <TextBlock Text="Вид товара:" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="0 0 5 0 "/>
+                <TextBlock Text="{Binding Product.Type.FullName}" Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+            </StackPanel>
+            <Grid Margin="0 0 0 5">
+                <TextBox materialDesign:HintAssist.Hint="Количество" Text="{Binding Amount}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5 0 10 0"/>
+            </Grid>
+            <Grid Margin="0 0 0 5">
+                <TextBox materialDesign:HintAssist.Hint="Цена" Text="{Binding Price}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5 0 10 0"/>
+            </Grid>
+            <Grid Margin="0 5">
+                <ComboBox materialDesign:HintAssist.Hint="Склад" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="5 0 10 0"  x:Name="UomComboBox" ItemsSource="{Binding ElementName=thisPage,Path=Model.Warehouses}" SelectedIndex="0" MaxDropDownHeight="150" SelectedItem="{Binding FromWarehouse}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" ToolTip="{Binding Description}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+            <StackPanel Orientation="Horizontal"  Margin="0 10">
+                <TextBlock Text="Общая сумма:" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="0 0 5 0 "/>
+                <TextBlock Text="{Binding TotalPrice}" Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"  Margin="0 10">
+                <TextBlock Text="Kредит  " Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="0 0 5 0 "/>
+                <ToggleButton  Style="{StaticResource MaterialDesignSwitchToggleButton}" ToolTip="Оформить кредит" x:Name="IsCredit"/>
+            </StackPanel>
+
+        </StackPanel>
+        <StackPanel Grid.Row="10" VerticalAlignment="Bottom" Margin="0 10 10 20" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button x:Name="YesBtn" Content="Добавить" Margin="0 0 10 0" Click="YesBtn_Click"/>
+            <Button x:Name="NoBtn" Content="Отменить" Click="NoBtn_Click" Focusable="True" Style="{StaticResource MaterialDesignRaisedLightButton}"/>
+        </StackPanel>
+        <Button Visibility="Collapsed" x:Name="ColorBtn"/>
+    </Grid>
+</Window>

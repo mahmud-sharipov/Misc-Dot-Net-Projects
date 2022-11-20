@@ -1,0 +1,23 @@
+﻿<Window x:Class="Server.Dialogs.YesNo" x:Name="thisPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Server.Dialogs"
+        MaxHeight="150"  MaxWidth="600"
+        Width="600" Height="150" WindowStyle="None" WindowStartupLocation="CenterScreen"
+        MinHeight="150"  MinWidth="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Margin="15 5 0 10" Style="{StaticResource MaterialDesignTitleTextBlock}" Text="{Binding ElementName=thisPage, Path=Titles}"/>
+        <TextBlock Margin="15 5 0 10" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="{Binding ElementName=thisPage, Path=Message}" Grid.Row="1" />
+        <StackPanel Grid.Row="2" VerticalAlignment="Bottom" Margin="0 0 10 10" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button x:Name="YesBtn" Width="70" Content="Да" Margin="0 0 10 0" Click="YesBtn_Click"/>
+            <Button x:Name="NoBtn" Content="Нет" Width="70" Click="No_Click" Focusable="True"/>
+        </StackPanel>
+    </Grid>
+</Window>

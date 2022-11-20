@@ -1,0 +1,120 @@
+﻿<UserControl x:Class="Server.Contents.ProductTypePage" x:Name="thisWindows"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:Server.Contents"
+             xmlns:myType="clr-namespace:Server.Models"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="900">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.Resources>
+            <Style x:Key="OpenTreeView" TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}"/>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Width="300" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Выди товаров" Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <TreeView x:Name="TreeTypes" Margin="0 40 0 10" ItemsSource="{Binding ElementName=thisWindows, Path=Types}" KeyUp="TreeTypes_KeyUp" SelectedItemChanged="TreeTypes_SelectedItemChanged">
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="TreeViewItem" BasedOn="{StaticResource OpenTreeView}">
+                            <Setter Property="IsExpanded" Value="True"/>
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate DataType="{x:Type local:TreeItems}" ItemsSource="{Binding Items}">
+                            <TextBlock Text="{Binding Label}"/>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+            </ScrollViewer>
+            <materialDesign:PopupBox    Grid.Row="1"    Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}" PlacementMode="LeftAndAlignMiddles" UnfurlOrientation="Horizontal" Margin="100 0 10 10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <StackPanel Orientation="Horizontal">
+
+                    <Button ToolTip="Изменить (F1)" x:Name="EditTypeBtn" Click="EditTypeBtn_Click">
+                        <materialDesign:PackIcon Kind="Pen" Width="20" Height="20"/>
+                    </Button>
+
+                    <Button ToolTip="Удалить (Delete)" x:Name="DaleteType" Click="DeleteType_Click">
+                        <materialDesign:PackIcon Kind="Delete" Width="20" Height="20"/>
+                    </Button>
+
+                    <Button ToolTip="Добавить (Enter)" x:Name="AddTypeBtn" Click="AddTypeBtn_Click">
+                        <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" Stretch="Uniform" Width="15" Height="15" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
+                    </Button>
+                </StackPanel>
+            </materialDesign:PopupBox>
+        </Grid>
+        <Grid Grid.Column="1" Margin="10 0 0 0">
+            <DataGrid FontSize="14" Margin="0 8 0 0" ItemsSource="{Binding ElementName=thisWindows, Path=Products}" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" x:Name="ProductList">
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Binding="{Binding Number}" Header="Номер" IsReadOnly="True" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+
+                    <DataGridTextColumn Binding="{Binding Code}" Header="Код" IsReadOnly="True" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+
+                    <DataGridTextColumn Binding="{Binding Name}" Header="Товар" IsReadOnly="True" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+
+                    <DataGridTextColumn Binding="{Binding Type.FullName}" Header="Вид товара" IsReadOnly="True" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+
+                    <DataGridTextColumn Binding="{Binding Price}" Header="Цена" IsReadOnly="True" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+
+                    <DataGridTextColumn Binding="{Binding Amount}" Header="Количество"  IsReadOnly="True" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel DataContext="{Binding ElementName=thisWindows,  Path=DataContext.ProductSuppliesLink}" Margin="0">
+                                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Margin="0" Command="{Binding LinkCommand}" CommandParameter="{Binding ElementName=ProductList,Path=SelectedItem }" ToolTip="{Binding Description}">
+                                        <TextBlock Margin="0" Style="{StaticResource MaterialDesignBody1TextBlock}"
+                          Text="{Binding Label}"/>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel DataContext="{Binding ElementName=thisWindows,  Path=DataContext.ProductInvoicesLink}" Margin="0">
+                                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Margin="0" Command="{Binding LinkCommand}" CommandParameter="{Binding ElementName=ProductList,Path=SelectedItem }" ToolTip="{Binding Description}">
+                                        <TextBlock Margin="0" Style="{StaticResource MaterialDesignBody1TextBlock}"
+                          Text="{Binding Label}"/>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0" />
+                    </Style>
+                </DataGrid.CellStyle>
+            </DataGrid>
+            <Button Visibility="Hidden" x:Name="ColorTempBtn"/>
+        </Grid>
+    </Grid>
+</UserControl>

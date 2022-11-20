@@ -1,0 +1,108 @@
+﻿<UserControl x:Class="Server.Contents.SuppliersPage" x:Name="thisPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:Server.Contents"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Margin="5 5 10 0"  MinWidth="300" >
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Поставщики" Style="{StaticResource MaterialDesignHeadlineTextBlock}" Margin="3 0 0 0"/>
+            <ListBox ItemsSource="{Binding Suppliers}" Margin="5 40 5 0" x:Name="SuppliersList" KeyUp="SuppliersList_KeyUp" SelectedItem="{Binding ElementName=thisPage, Path=CurrentSupplier}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#ddd" BorderThickness="0 0 0 1" Width="240" Padding="5 7 0 8">
+                            <Grid>
+                                <TextBlock Text="{Binding Name}" ToolTip="{Binding Description}" Margin="0 0 35 0"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <StackPanel Grid.Row="1" Margin="0 10 0 0">
+                <materialDesign:PopupBox    Grid.Row="1"    Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}" PlacementMode="LeftAndAlignMiddles" UnfurlOrientation="Horizontal" Margin="0 0 65 10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <StackPanel Orientation="Horizontal">
+                        <Button ToolTip="Отчет по поставкам (F2)" x:Name="ReportSupplier" Click="Report_Click">
+                            <materialDesign:PackIcon Kind="Truck" Width="20" Height="20"/>
+                        </Button>
+                        <Button ToolTip="Изменить (F1)" x:Name="EditSupplier" Click="EditSupplier_Click">
+                            <materialDesign:PackIcon Kind="Pen" Width="20" Height="20"/>
+                        </Button>
+                        <!--<Button ToolTip="Удалить (Delete)" x:Name="DaleteSpplier" Click="DeleteSpplier_Click">
+                            <materialDesign:PackIcon Kind="Delete" Width="20" Height="20"/>
+                        </Button>-->
+                        <Button ToolTip="Добавить (Enter)" x:Name="AddSpplier" Click="AddSpplier_Click">
+                            <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" Stretch="Uniform" Width="15" Height="15" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
+                        </Button>
+                    </StackPanel>
+                </materialDesign:PopupBox>
+                <Button ToolTip="Изменить" x:Name="ResetListSelectItem" Click="ResetListSelectItem_Click" Style="{StaticResource MaterialDesignFloatingActionDarkButton}" Margin="0 -70 0 10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <materialDesign:PackIcon Kind="Restart" Width="20" Height="20"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1" Margin="2 0 0 0">
+            <TextBlock Text="Поставки" Style="{StaticResource MaterialDesignHeadlineTextBlock}" Margin="3 0 0 9"/>
+            <DataGrid ItemsSource="{Binding ElementName=thisPage, Path=Supplies}" CanUserAddRows="False" AutoGenerateColumns="False" x:Name="ProductList" Margin="0 40 0 0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Product.Number}" Header="Номер" IsReadOnly="True" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+
+                    <DataGridTextColumn Binding="{Binding Product.Code}" Header="Код" IsReadOnly="True" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+
+                    <DataGridTextColumn Binding="{Binding Product.Name}" Header="Товар" IsReadOnly="True" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+
+                    <DataGridTextColumn Binding="{Binding Product.Type.FullName}" Header="Вид товара" IsReadOnly="True" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+
+                    <DataGridTextColumn Binding="{Binding Price}" Header="Цена" IsReadOnly="True" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+
+                    <DataGridTextColumn Binding="{Binding Amount}" Header="Количество"  IsReadOnly="True" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+
+                    <DataGridTextColumn Binding="{Binding Date}" Header="Дата и время" IsReadOnly="True" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+
+                    <DataGridTextColumn Binding="{Binding TotalPrice}" Header="Общая сумма" IsReadOnly="True" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+
+                    <DataGridTextColumn Binding="{Binding ToWarehouse.Name}" Header="Склад" IsReadOnly="True" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}" Click="Button_Click">
+                                    <materialDesign:PackIcon Kind="Pen" Foreground="{Binding ElementName=ColorTempBtn,Path=Background}" Width="20" Height="20"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0" />
+                    </Style>
+                </DataGrid.CellStyle>
+            </DataGrid>
+        </Grid>
+        <Button Visibility="Hidden" x:Name="ColorTempBtn"/>
+    </Grid>
+</UserControl>

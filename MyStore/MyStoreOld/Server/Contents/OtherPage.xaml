@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="Server.Contents.OtherPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:Server.Contents"
+             xmlns:myType="clr-namespace:Server.Models"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="900">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.Resources>
+            <Style x:Key="OpenTreeView" TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}"/>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid Margin="20 5 0 0"  MinWidth="250">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Еденицы измерения" Style="{StaticResource MaterialDesignHeadlineTextBlock}" Margin="3 0 0 0"/>
+            <ListBox ItemsSource="{Binding UOMs}" Margin="5 40 5 0" x:Name="UOMsList" KeyUp="UOMsList_KeyUp">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#ddd" BorderThickness="0 0 0 1" Width="240" Padding="5 7 0 8">
+                            <Grid>
+                                <TextBlock Text="{Binding Name}" ToolTip="{Binding Description}"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <StackPanel Grid.Row="1" Margin="0 10 0 0">
+                <materialDesign:PopupBox    Grid.Row="1"    Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}" PlacementMode="LeftAndAlignMiddles" UnfurlOrientation="Horizontal" Margin="0 10 10 10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <StackPanel Orientation="Horizontal">
+                        <Button ToolTip="Изменить (F1)" x:Name="EditUOM" Click="EditUOM_Click">
+                            <materialDesign:PackIcon Kind="Pen" Width="20" Height="20"/>
+                        </Button>
+                        <Button ToolTip="Удалить (Delete)" x:Name="DaleteUOM" Click="DaleteUOM_Click">
+                            <materialDesign:PackIcon Kind="Delete" Width="20" Height="20"/>
+                        </Button>
+                        <Button ToolTip="Добавить (Enter)" x:Name="AddUOM" Click="AddUOM_Click">
+                            <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" Stretch="Uniform" Width="15" Height="15" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
+                        </Button>
+                    </StackPanel>
+                </materialDesign:PopupBox>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

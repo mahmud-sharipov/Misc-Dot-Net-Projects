@@ -1,0 +1,191 @@
+﻿<UserControl
+    x:Class="Server.Contents.ProductsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:UI="clr-namespace:Server.UIElemetn"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Server.Contents"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    x:Name="thisPage"
+    d:DesignHeight="500"
+    d:DesignWidth="1200"
+    mc:Ignorable="d">
+    <Grid>
+        <DataGrid
+            x:Name="ProductList"
+            Margin="0,8,0,0"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserSortColumns="True"
+            FontSize="14"
+            ItemsSource="{Binding Products}">
+            <DataGrid.Columns>
+
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding Number}"
+                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                    IsReadOnly="True">
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <UI:SearchBox Hint="Номер" TextChanged="NumberFilter_TextChanged" />
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn
+                    Binding="{Binding Code}"
+                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                    Header="Код"
+                    IsReadOnly="True" />
+
+                <DataGridTextColumn
+                    Binding="{Binding Name}"
+                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                    IsReadOnly="True">
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <UI:SearchBox Hint="Товар" TextChanged="NameFilter_TextChanged" />
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn
+                    Binding="{Binding Type.FullName}"
+                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                    IsReadOnly="True">
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <UI:SearchBox Hint="Вид товара" TextChanged="TypeFilter_TextChanged" />
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn
+                    Binding="{Binding Price}"
+                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                    Header="Цена"
+                    IsReadOnly="True" />
+
+                <DataGridTextColumn
+                    Binding="{Binding Amount}"
+                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                    Header="Количество"
+                    IsReadOnly="True" />
+
+                <DataGridTextColumn
+                    Binding="{Binding UOM.Name}"
+                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                    Header="Е.измерения"
+                    IsReadOnly="True" />
+
+                <DataGridTextColumn
+                    Binding="{Binding TotalQuantity}"
+                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                    Header="Общая количество"
+                    IsReadOnly="True" />
+                <!--  1  -->
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0" DataContext="{Binding ElementName=thisPage, Path=DataContext.ProductSuppliesLink}">
+                                <Button
+                                    Margin="0"
+                                    Command="{Binding LinkCommand}"
+                                    CommandParameter="{Binding ElementName=ProductList, Path=SelectedItem}"
+                                    Style="{DynamicResource MaterialDesignFlatButton}"
+                                    ToolTip="{Binding Description}">
+                                    <TextBlock
+                                        Margin="0"
+                                        Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                        Text="{Binding Label}" />
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0" DataContext="{Binding ElementName=thisPage, Path=DataContext.ProductInvoicesLink}">
+                                <Button
+                                    Margin="0"
+                                    Command="{Binding LinkCommand}"
+                                    CommandParameter="{Binding ElementName=ProductList, Path=SelectedItem}"
+                                    Style="{DynamicResource MaterialDesignFlatButton}"
+                                    ToolTip="{Binding Description}">
+                                    <TextBlock
+                                        Margin="0"
+                                        Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                        Text="{Binding Label}" />
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="EditBtn_Click" Style="{DynamicResource MaterialDesignFlatButton}">
+                                <materialDesign:PackIcon
+                                    Width="20"
+                                    Height="20"
+                                    Foreground="{Binding ElementName=ColorTempBtn, Path=Background}"
+                                    Kind="Pen" />
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="20,5,0,10" Orientation="Horizontal">
+                        <ComboBox
+                            x:Name="WarehouseComboBox"
+                            MinWidth="150"
+                            ItemsSource="{Binding Warehouse}"
+                            SelectedIndex="0">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Warehouse.Name}" ToolTip="{Binding Warehouse.Description}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                            <ComboBox.Style>
+                                <Style />
+                            </ComboBox.Style>
+                        </ComboBox>
+                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Text="   Кол/во: " />
+                            <TextBlock MinWidth="110" Text="{Binding ElementName=WarehouseComboBox, Path=SelectedItem.Amount}" />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+            <DataGrid.CellStyle>
+                <Style BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="DataGridCell">
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Setter Property="BorderThickness" Value="0" />
+                </Style>
+            </DataGrid.CellStyle>
+        </DataGrid>
+        <Button
+            x:Name="AddBtn"
+            Margin="0,0,20,20"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Click="AddBtn_Click"
+            Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
+            ToolTip="Добавить товар">
+            <materialDesign:PackIcon
+                Width="24"
+                Height="24"
+                Kind="Plus" />
+        </Button>
+        <Button x:Name="ColorTempBtn" Visibility="Hidden" />
+    </Grid>
+</UserControl>

@@ -1,0 +1,353 @@
+﻿<UserControl
+    x:Class="TeacherHelper.UI.View.DockingManager"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:myad="clr-namespace:AvalonDock.Themes.MaterilMetro;assembly=AvalonDock.Themes.MaterilMetro"
+    xmlns:s="clr-namespace:System;assembly=mscorlib"
+    xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid>
+        <xcad:DockingManager x:Name="_dockingManager" AllowMixedOrientation="True">
+            <xcad:LayoutRoot x:Name="_layoutRoot">
+                <xcad:LayoutPanel Orientation="Horizontal">
+                    <xcad:LayoutAnchorablePane DockWidth="200">
+                        <myad:LayoutAnchorable
+                            Title="Properties"
+                            AutoHideWidth="240"
+                            CanClose="False"
+                            CanHide="False"
+                            ContentId="properties"
+                            Icon="FormatListBulletedType" />
+                    </xcad:LayoutAnchorablePane>
+                    <xcad:LayoutDocumentPaneGroup>
+                        <xcad:LayoutDocumentPane>
+                            <myad:LayoutDocument
+                                Title="Document 1"
+                                ContentId="document1"
+                                Icon="FileDocumentOutline">
+                                <ToolBarTray>
+                                    <ToolBar ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
+                                        <Button ToolTip="Follow me on Twitter">
+                                            <materialDesign:PackIcon Kind="TwitterBox" />
+                                        </Button>
+                                        <Button ToolTip="Save">
+                                            <materialDesign:PackIcon Kind="ContentSave" />
+                                        </Button>
+                                        <Separator />
+                                        <Button
+                                            Command="Cut"
+                                            ToolBar.OverflowMode="AsNeeded"
+                                            ToolTip="Cut">
+                                            <materialDesign:PackIcon Kind="ContentCut" />
+                                        </Button>
+                                        <Button
+                                            Command="Copy"
+                                            ToolBar.OverflowMode="AsNeeded"
+                                            ToolTip="Copy that stuff">
+                                            <materialDesign:PackIcon Kind="ContentCopy" />
+                                        </Button>
+                                        <Separator />
+                                        <Button
+                                            Command="Paste"
+                                            ToolBar.OverflowMode="AsNeeded"
+                                            ToolTip="Paste some stuff">
+                                            <materialDesign:PackIcon Kind="ContentPaste" />
+                                        </Button>
+                                        <!--
+                                            when badging in a toolbar, make sure the parent ToolBar.ClipToBounds="False", and
+                                            manually apply the button style
+                                        -->
+                                        <materialDesign:Badged Badge="{materialDesign:PackIcon Alert}" ToolBar.OverflowMode="AsNeeded">
+                                            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="Badge it up!">
+                                                <materialDesign:PackIcon Kind="AirplaneTakeoff" />
+                                            </Button>
+                                        </materialDesign:Badged>
+                                        <Separator />
+                                        <ListBox>
+                                            <ListBoxItem ToolTip="This is a lonley toggle with TextBlock instead of icon">
+                                                <TextBlock>
+                                                    W
+                                                </TextBlock>
+                                            </ListBoxItem>
+                                        </ListBox>
+                                        <Separator />
+                                        <ListBox SelectedIndex="0">
+                                            <ListBox.ToolTip>
+                                                <StackPanel>
+                                                    <TextBlock Text="MaterialDesignToolToggleFlatListBox" />
+                                                    <TextBlock Text="Exclusive selection" />
+                                                    <TextBlock Text="ListBoxAssist.IsToggle allows more natural toggle behaviour" />
+                                                </StackPanel>
+                                            </ListBox.ToolTip>
+                                            <ListBoxItem>
+                                                <materialDesign:PackIcon Kind="FormatAlignLeft" />
+                                            </ListBoxItem>
+                                            <ListBoxItem>
+                                                <materialDesign:PackIcon Kind="FormatAlignCenter" />
+                                            </ListBoxItem>
+                                            <ListBoxItem>
+                                                <materialDesign:PackIcon Kind="FormatAlignRight" />
+                                            </ListBoxItem>
+                                            <ListBoxItem>
+                                                <materialDesign:PackIcon Kind="FormatAlignJustify" />
+                                            </ListBoxItem>
+                                        </ListBox>
+                                        <Separator />
+                                        <ListBox SelectionMode="Extended">
+                                            <ListBox.ToolTip>
+                                                <StackPanel>
+                                                    <TextBlock Text="MaterialDesignToolToggleListBox" />
+                                                    <TextBlock Text="Multiple selection" />
+                                                    <TextBlock Text="ListBoxAssist.IsToggle allows more natural toggle behaviour" />
+                                                </StackPanel>
+                                            </ListBox.ToolTip>
+                                            <ListBoxItem>
+                                                <materialDesign:PackIcon Kind="FormatBold" />
+                                            </ListBoxItem>
+                                            <ListBoxItem>
+                                                <materialDesign:PackIcon Kind="FormatItalic" />
+                                            </ListBoxItem>
+                                            <ListBoxItem x:Name="UnderlineCheckbox">
+                                                <materialDesign:PackIcon Kind="FormatUnderline" />
+                                            </ListBoxItem>
+                                        </ListBox>
+                                        <Separator />
+                                        <Label VerticalAlignment="Center" Content="Font size:" />
+                                        <ComboBox>
+                                            <ComboBoxItem Content="10" />
+                                            <ComboBoxItem Content="12" IsSelected="True" />
+                                            <ComboBoxItem Content="14" />
+                                            <ComboBoxItem Content="16" />
+                                        </ComboBox>
+                                        <CheckBox>
+                                            Check
+                                        </CheckBox>
+                                        <Button ToolBar.OverflowMode="Always" ToolTip="Take a nap">
+                                            <materialDesign:PackIcon Kind="Hotel" />
+                                        </Button>
+                                        <RadioButton Content="Radio" GroupName="XXX" />
+                                        <RadioButton Content="Ga Ga" GroupName="XXX" />
+                                        <ToggleButton />
+                                    </ToolBar>
+                                </ToolBarTray>
+                            </myad:LayoutDocument>
+                            <myad:LayoutDocument
+                                Title="qwertyuioplkjhgfdsazxcvbnm123456789"
+                                ContentId="document2"
+                                Icon="FileDocumentOutline">
+                                <WrapPanel>
+                                    <materialDesign:Card Width="220">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="140" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Image Height="140" Stretch="UniformToFill" />
+                                            <Button
+                                                Grid.Row="0"
+                                                Margin="0,0,16,-20"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Bottom"
+                                                Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}">
+                                                <materialDesign:PackIcon Kind="ShareVariant" />
+                                            </Button>
+                                            <StackPanel Grid.Row="1" Margin="8,24,8,4">
+                                                <TextBlock Margin="0" Style="{StaticResource MaterialDesignSubheadingTextBlock}">
+                                                    E.T. the Extra-Terrestrial
+                                                </TextBlock>
+                                                <Viewbox
+                                                    Height="16"
+                                                    Margin="0,4,0,8"
+                                                    HorizontalAlignment="Left">
+                                                    <materialDesign:RatingBar
+                                                        Margin="0"
+                                                        Foreground="Gold"
+                                                        Orientation="Horizontal"
+                                                        Value="3" />
+                                                </Viewbox>
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                                    TextWrapping="Wrap">
+                                                    After a gentle alien becomes stranded on Earth, the being is discovered and befriended by a young boy named Elliott.
+                                                </TextBlock>
+                                            </StackPanel>
+                                            <Separator
+                                                Grid.Row="2"
+                                                Margin="8,0,8,0"
+                                                Style="{StaticResource MaterialDesignDarkSeparator}" />
+                                            <TextBlock
+                                                Grid.Row="3"
+                                                Margin="8,4,8,4"
+                                                Style="{StaticResource MaterialDesignBody2TextBlock}">
+                                                Tonight's availability
+                                            </TextBlock>
+                                            <Grid Grid.Row="4">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <materialDesign:PackIcon
+                                                    Grid.Column="0"
+                                                    Margin="8,4,4,4"
+                                                    VerticalAlignment="Center"
+                                                    Kind="Clock" />
+                                                <ListBox
+                                                    Grid.Column="1"
+                                                    Margin="4,8,8,4"
+                                                    SelectedIndex="0"
+                                                    Style="{StaticResource MaterialDesignToolToggleFlatListBox}">
+                                                    <ListBox.Resources>
+                                                        <Style BasedOn="{StaticResource MaterialDesignToolToggleListBoxItem}" TargetType="{x:Type ListBoxItem}">
+                                                            <Setter Property="Padding" Value="4,6,4,6" />
+                                                        </Style>
+                                                    </ListBox.Resources>
+                                                    <ListBox.ToolTip>
+                                                        <StackPanel>
+                                                            <TextBlock Text="MaterialDesignFlatToggleListBox" />
+                                                            <TextBlock Text="Exclusive selection" />
+                                                            <TextBlock Text="ListBoxAssist.IsToggle allows more natural toggle behaviour" />
+                                                        </StackPanel>
+                                                    </ListBox.ToolTip>
+                                                    <ListBoxItem>
+                                                        <TextBlock Text="18:00" />
+                                                    </ListBoxItem>
+                                                    <ListBoxItem>
+                                                        <TextBlock Text="19:00" />
+                                                    </ListBoxItem>
+                                                    <ListBoxItem>
+                                                        <TextBlock Text="22:00" />
+                                                    </ListBoxItem>
+                                                </ListBox>
+                                            </Grid>
+                                            <StackPanel Grid.Row="5">
+                                                <Button
+                                                    Margin="8,4,8,8"
+                                                    HorizontalAlignment="Left"
+                                                    Style="{StaticResource MaterialDesignFlatButton}">
+                                                    RESERVE
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                    </materialDesign:Card>
+                                </WrapPanel>
+                            </myad:LayoutDocument>
+                        </xcad:LayoutDocumentPane>
+                    </xcad:LayoutDocumentPaneGroup>
+                    <xcad:LayoutAnchorablePaneGroup>
+                        <xcad:LayoutAnchorablePane DockWidth="200">
+                            <myad:LayoutAnchorable
+                                Title="Alarms"
+                                ContentId="alarms"
+                                Icon="Alarms">
+                                <ListBox>
+                                    <s:String>Alarm 1</s:String>
+                                    <s:String>Alarm 2</s:String>
+                                    <s:String>Alarm 3</s:String>
+                                    <s:String>Alarm 1</s:String>
+                                    <s:String>Alarm 2</s:String>
+                                    <s:String>Alarm 3</s:String>
+                                    <s:String>Alarm 1</s:String>
+                                    <s:String>Alarm 2</s:String>
+                                    <s:String>Alarm 3</s:String>
+                                    <s:String>Alarm 1</s:String>
+                                    <s:String>Alarm 2</s:String>
+                                    <s:String>Alarm 3</s:String>
+                                    <s:String>Alarm 1</s:String>
+                                    <s:String>Alarm 2</s:String>
+                                    <s:String>Alarm 3</s:String>
+                                    <s:String>Alarm 1</s:String>
+                                    <s:String>Alarm 2</s:String>
+                                    <s:String>Alarm 3</s:String>
+                                </ListBox>
+                            </myad:LayoutAnchorable>
+                            <myad:LayoutAnchorable
+                                Title="Journal"
+                                ContentId="journal"
+                                Icon="ContentPaste">
+                                <RichTextBox>
+                                    <FlowDocument>
+                                        <Paragraph FontFamily="Segoe" FontSize="14">
+                                            This is the content of the Journal Pane.<LineBreak />
+                                            A<Bold>RichTextBox</Bold>
+                                            has been added here</Paragraph>
+                                    </FlowDocument>
+                                </RichTextBox>
+                            </myad:LayoutAnchorable>
+                        </xcad:LayoutAnchorablePane>
+                    </xcad:LayoutAnchorablePaneGroup>
+                </xcad:LayoutPanel>
+                <xcad:LayoutRoot.LeftSide>
+                    <xcad:LayoutAnchorSide>
+                        <xcad:LayoutAnchorGroup>
+                            <myad:LayoutAnchorable
+                                Title="Agenda"
+                                ContentId="agenda"
+                                Icon="BookOpenOutline">
+                                <TextBlock
+                                    Margin="10"
+                                    FontSize="18"
+                                    FontWeight="Black"
+                                    Text="Agenda Content"
+                                    TextWrapping="Wrap" />
+                            </myad:LayoutAnchorable>
+                            <myad:LayoutAnchorable
+                                Title="AgendaAgendaAgendaAgendaAgendaAgendaAgenda"
+                                ContentId="agenda"
+                                Icon="BookOpenOutline">
+                                <TextBlock
+                                    Margin="10"
+                                    FontSize="18"
+                                    FontWeight="Black"
+                                    Text="Agenda Content"
+                                    TextWrapping="Wrap" />
+                            </myad:LayoutAnchorable>
+                            <myad:LayoutAnchorable
+                                Title="Agenda"
+                                ContentId="agenda"
+                                Icon="BookOpenOutline">
+                                <TextBlock
+                                    Margin="10"
+                                    FontSize="18"
+                                    FontWeight="Black"
+                                    Text="Agenda Content"
+                                    TextWrapping="Wrap" />
+                            </myad:LayoutAnchorable>
+                            <myad:LayoutAnchorable
+                                Title="Agenda"
+                                ContentId="agenda"
+                                Icon="BookOpenOutline">
+                                <TextBlock
+                                    Margin="10"
+                                    FontSize="18"
+                                    FontWeight="Black"
+                                    Text="Agenda Content"
+                                    TextWrapping="Wrap" />
+                            </myad:LayoutAnchorable>
+                            <myad:LayoutAnchorable
+                                Title="Contacts"
+                                ContentId="contacts"
+                                Icon="BookUnsecure">
+                                <TextBlock
+                                    Margin="10"
+                                    FontSize="18"
+                                    FontWeight="Black"
+                                    Text="Contacts Content"
+                                    TextWrapping="Wrap" />
+                            </myad:LayoutAnchorable>
+                        </xcad:LayoutAnchorGroup>
+                    </xcad:LayoutAnchorSide>
+                </xcad:LayoutRoot.LeftSide>
+            </xcad:LayoutRoot>
+        </xcad:DockingManager>
+    </Grid>
+</UserControl>

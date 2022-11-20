@@ -1,0 +1,263 @@
+﻿<Window x:Class="ClassJoural.FirstRaning"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         WindowState="Maximized"
+        mc:Ignorable="d"
+        Title="Настройка" Height="900" Width="1200">
+    <Window.Resources>
+        <Style x:Name="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="5 0"/>
+            <Setter Property="Padding" Value="10 0"/>
+            <Setter Property="Background" Value="#657887"/>
+            <Setter Property="BorderBrush" Value="#657887"/>
+            <Setter Property="Foreground" Value="#fff"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style x:Name="DataGridStyle" TargetType="DataGrid">
+            <Setter Property="CellStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Height" Value="25"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="FontSize" Value="14"/>
+                        <Style.Triggers>
+                            <Trigger Property="DataGridCell.IsSelected" Value="true">
+                                <Setter Property="Background" Value="#768998" />
+                                <Setter Property="BorderBrush" Value="#415666" />
+                                <Setter Property="Foreground" Value="#fff" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="Header" Text="Маълумоти умӯмӣ" FontSize="20" HorizontalAlignment="Center" Margin="0 30 0 10" Grid.Column="2"/>
+        <StackPanel Grid.Row="1" x:Name="Content1" Visibility="Visible" Width="350" Grid.Column="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Соли хониш: " VerticalAlignment="Center"/>
+                <ComboBox x:Name="ClassNumber" SelectedItem="{Binding YearStudy}" SelectedIndex="0" Grid.Column="1" Margin="0 5"/>
+                <TextBlock Text="Гурӯҳ: " Grid.Row="1" VerticalAlignment="Center"/>
+                <ComboBox x:Name="ClassGroup" SelectedIndex="0" Grid.Row="1" Grid.Column="1" Margin="0 5" SelectedItem="{Binding Group}">
+                    <ComboBox.Items>
+                        <ComboBoxItem>А</ComboBoxItem>
+                        <ComboBoxItem>Б</ComboBoxItem>
+                        <ComboBoxItem>В</ComboBoxItem>
+                        <ComboBoxItem>Г</ComboBoxItem>
+                    </ComboBox.Items>
+                </ComboBox>
+                <!--2-->
+                <TextBlock Text="Роҳбари синф:" Grid.Row="2" Margin="0 0 10 0" VerticalAlignment="Center"/>
+                <TextBox x:Name="ClassTeacher" Text="{Binding ClassTeacher.FIO}" Grid.Row="2" Grid.Column="1" Margin="0 5 0 5"/>
+                <!--3-->
+                <TextBlock Text="Миқдори хонандаҳо:" Grid.Row="3" Margin="0 0 10 0" VerticalAlignment="Center"/>
+                <TextBox x:Name="ClassStudentsCount" Text="{Binding ClassStudentCount}" Grid.Row="3" Grid.Column="1" Margin="0 5"/>
+
+                <TextBlock Text="Миқдори фанҳо: " Grid.Row="4" Margin="0 0 10 0" VerticalAlignment="Center"/>
+                <TextBox x:Name="ClassFanCount" Text="{Binding ClassSubjectCount}" Grid.Row="4" Grid.Column="1" Margin="0 5"/>
+                <!--999-->
+                <Button Content="Ба пеш" Grid.Column="2"  Grid.Row="30" x:Name="NextBtn1" HorizontalAlignment="Right" Margin="0 15 0 5" Click="NextBtn1_Click"/>
+            </Grid>
+        </StackPanel>
+        <Grid Grid.Row="1" x:Name="Content2" Margin="10" Visibility="Hidden" Grid.ColumnSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <DataGrid x:Name="StudentList" AutoGenerateColumns="False"  CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Ном" Binding="{Binding Name}" Width="*"/>
+                    <DataGridTextColumn Header="Насаб" Binding="{Binding LastName}" Width="*"/>
+                    <DataGridTextColumn Header="Номи падар" Binding="{Binding MiddleName}" Width="*"/>
+                    <DataGridTextColumn Header="Соли тавалуд" IsReadOnly="True" Binding="{Binding DateOfBirthText}" Width="*"/>
+                    <DataGridTextColumn Header="Суроға" Binding="{Binding Address}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Grid Grid.Row="1" Margin="0 10 0 0" DataContext="{Binding  ElementName=StudentList,Path=SelectedItem}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="80"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Ном: " VerticalAlignment="Center"/>
+                <TextBox x:Name="StudentName" Text="{Binding Name}" Grid.Column="1" Margin="0 5 0 5"/>
+                <TextBlock Text="Насаб: " Grid.Row="1" VerticalAlignment="Center"/>
+                <TextBox x:Name="StudentLastName" Text="{Binding LastName}" Grid.Row="1" Grid.Column="1" Margin="0 5 0 5"/>
+                <TextBlock Text="Номи падар: " Grid.Row="2" VerticalAlignment="Center"/>
+                <TextBox x:Name="StudentMiddleName" Text="{Binding MiddleName}" Grid.Row="2" Grid.Column="1" Margin="0 5 0 5"/>
+                <TextBlock Text="Соли тавалуд: " Grid.Row="3" VerticalAlignment="Center"/>
+                <DatePicker x:Name="StudentSoliTav" SelectedDate="{Binding DateOfBirth}" Grid.Row="3" Grid.Column="1" Margin="0 5 0 5" />
+                <TextBlock Text="Суроға: " Grid.Row="4" VerticalAlignment="Center"/>
+                <TextBox x:Name="StudentAddress" Text="{Binding Address}" Grid.Row="4" Grid.Column="1" Margin="0 5 0 5"/>
+
+                <Grid Grid.RowSpan="5" Grid.Column="2" TextBlock.FontSize="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="280"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Волидайни хонанда" Margin=" 10 0 0 0"/>
+                    <ListBox x:Name="StudentParents" Margin="10 20 10 0" ItemsSource="{Binding Parents}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{Binding FIO}" Margin="5 0 0 0"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <Button Content="Илова" Margin="0 0 0 5" Background="#0a0" x:Name="AddParentForStudentBtn" Click="AddParentForStudentBtn_Click"/>
+                        <Button Content="Хориҷ" x:Name="DeleteParentFromStudentBtn" Background="#a00"  Click="DeleteParentFromStudentBtn_Click" Margin="0"/>
+                    </StackPanel>
+                    <TextBlock Text="Волидайнҳо" Margin=" 10 0 0 0" Grid.Column="2"/>
+                    <ListBox x:Name="Parents" Grid.Column="2" Margin="10 20 10 0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{Binding FIO}" Margin="5 0 0 0"/>
+                                    <!--<TextBlock Text="{Binding Phone}" Grid.Row="1" Margin="10 0 0 0"/>-->
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <TextBlock Text="Волидайни нав" Grid.Column="3"/>
+                    <Grid Grid.Column="3" Margin="0 20 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Ному Насаб: " VerticalAlignment="Center"/>
+                        <TextBox x:Name="NewParantFIO" Grid.Column="1" Margin="0 5"/>
+                        <TextBlock Text="Телефон: " Grid.Row="1" VerticalAlignment="Center"/>
+                        <TextBox x:Name="NewParantPhone" Grid.Row="1" Grid.Column="1" Margin="0 5"/>
+                        <Button Content="Иловаи волидайни нав" Background="#0a0" Grid.Column="1"  Grid.Row="2" x:Name="AddNewParentBtn" HorizontalAlignment="Right" Margin="0 5 0 0" Click="AddNewParentBtn_Click"/>
+                    </Grid>
+                </Grid>
+                <!--999-->
+                <Button Content="Ба пеш" Grid.Column="2"  Grid.Row="30" x:Name="NextBtn2" HorizontalAlignment="Right" Margin="0 15 0 5" Click="NextBtn2_Click" Width="130" Height="50"/>
+                <Button Content="Ба қафо" Grid.Column="2"  Grid.Row="30" x:Name="BackBtn2" HorizontalAlignment="Right" Margin="0 15 140 5" Click="BackBtn2_Click" Width="130" Height="50"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1" x:Name="Content3" Margin="10" Visibility="Hidden"  Grid.ColumnSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <DataGrid x:Name="SubjectList" AutoGenerateColumns="False"  CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Номи фан" Binding="{Binding Name}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="Ному насаби омӯзгор" Binding="{Binding Teacher.FIO}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="Миқдори соати дарсӣ" Binding="{Binding SubjectHourCount}" IsReadOnly="True" Width="auto"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Grid Grid.Row="1" Margin="0 10 0 0" DataContext="{Binding  ElementName=SubjectList,Path=SelectedItem}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="80"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Номи фан: " VerticalAlignment="Center"/>
+                <TextBox x:Name="FanName" Text="{Binding Name}" Grid.Column="1" Margin="0 5 0 5"/>
+                <TextBlock Text="Муаллим: " Grid.Row="1" VerticalAlignment="Center"/>
+                <ComboBox x:Name="SubjectTeacher" Grid.Column="1" Grid.Row="1" Margin="0 5 0 5"  SelectedItem="{Binding Teacher}" SelectedIndex="0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding FIO}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <TextBlock Text="Миқдори соати дарсӣ: " Grid.Row="2" VerticalAlignment="Center"/>
+                <TextBox x:Name="FanHourCount" Grid.Column="1" Text="{Binding SubjectHourCount}" Grid.Row="2" Margin="0 5 0 5"/>
+                <Grid Grid.Column="3" Grid.RowSpan="3" Margin="20 0 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Ному насаби омӯзгор: " VerticalAlignment="Center"/>
+                    <TextBox x:Name="NewTeacherFIO" Grid.Column="1"/>
+
+                    <Button Content="Илова" Background="#0a0" Grid.Column="1"  Grid.Row="2" Margin="0 5 0 0" x:Name="AddNewTeacherBtn" HorizontalAlignment="Right" Click="AddNewTeacherBtn_Click"/>
+                    <Button Content="x" Grid.Row="2" Margin="-17 4 0 6" Background="#a00" x:Name="DeleteTeacherBtn" HorizontalAlignment="Left"  Click="DeleteTeacherBtn_Click"/>
+                </Grid>
+                <!--999-->
+                <Button Content="Ба пеш" Grid.Column="2"  Grid.Row="30" x:Name="NextBtn3" HorizontalAlignment="Right" Margin="0 15 0 5" Click="NextBtn3_Click" Width="130" Height="50"/>
+                <Button Content="Ба қафо" Grid.Column="2"  Grid.Row="30" x:Name="BackBtn3" HorizontalAlignment="Right" Margin="0 15 140 5" Click="BackBtn3_Click" Width="130" Height="50"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1" x:Name="Content4" Margin="10" Visibility="Hidden" Grid.ColumnSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <DataGrid x:Name="ScheduleList" AutoGenerateColumns="False" CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Номи фан" Binding="{Binding Subject.Name}" IsReadOnly="True" Width="auto"/>
+                    
+                    <DataGridCheckBoxColumn  Header="Душанбе"  Width="auto" Binding="{Binding Dushanbe}"/>
+                    <DataGridCheckBoxColumn  Header="Сешанбе"  Width="auto" Binding="{Binding Seshanbe}"/>
+                    <DataGridCheckBoxColumn  Header="Чоршанбе"  Width="auto" Binding="{Binding Chorshanbe}"/>
+                    <DataGridCheckBoxColumn  Header="Панҷшанбе"  Width="auto" Binding="{Binding Panjshanbe}"/>
+                    <DataGridCheckBoxColumn  Header="Ҷумъа"  Width="auto" Binding="{Binding Juma}"/>
+                    <DataGridCheckBoxColumn  Header="Шанбе"  Width="auto" Binding="{Binding Shanbe}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Content="Тайёр" Grid.Column="2"  Grid.Row="30" x:Name="FinishBtn" HorizontalAlignment="Right" Margin="0 15 0 5" Click="FinishBtn_Click" Width="130" Height="50"/>
+            <Button Content="Ба қафо" Grid.Column="2"  Grid.Row="30" x:Name="BackBtn4" HorizontalAlignment="Right" Margin="0 15 140 5" Click="BackBtn4_Click" Width="130" Height="50"/>
+
+        </Grid>
+    </Grid>
+</Window>
